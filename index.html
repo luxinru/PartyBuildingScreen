@@ -16,6 +16,7 @@
         type="text/css"
         href="./style/index.less" />
   <script src="./js/less.min.js"></script>
+  <script src="./js/echarts.js"></script>
   <script src="./js/index.js"></script>
 </head>
 
@@ -50,6 +51,8 @@
                    alt="">
               <span>经济效益</span>
             </div>
+
+            <div id="chart1" class="box_content"></div>
           </div>
         </div>
         <div class="part_item">
@@ -165,6 +168,13 @@
               <img src="./assets/images/like-fill.png"
                    alt="">
               <span>季度排行榜</span>
+            </div>
+
+            <div class="box_content">
+              <div class="quarterly_leaderboard">
+                <div id="chart2" class="item"></div>
+                <div id="chart3" class="item"></div>
+              </div>
             </div>
           </div>
         </div>
