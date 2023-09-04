@@ -332,6 +332,10 @@ function getChart2Data(dom) {
 
   // 指定图表的配置项和数据
   const option = {
+    axisPointer: {
+      show: true,
+      type: "shadow",
+    },
     grid: {
       left: "3%",
       right: "3%",
@@ -606,6 +610,10 @@ function getChart3Data(dom) {
 
   // 指定图表的配置项和数据
   const option = {
+    axisPointer: {
+      show: true,
+      type: "shadow",
+    },
     grid: {
       left: "3%",
       right: "3%",
@@ -823,10 +831,10 @@ function getChart5Data(dom) {
       },
     },
     grid: {
-      top: "20%",
+      top: "30%",
       left: "3%",
       right: "3%",
-      bottom: "3%",
+      bottom: "20px",
       containLabel: true,
     },
     xAxis: [
@@ -842,6 +850,7 @@ function getChart5Data(dom) {
         axisLabel: {
           fontSize: 14,
           color: "rgba(196, 101, 85, 1)",
+          margin: 20,
         },
         data: ["2024", "2025", "2026"],
       },
@@ -905,9 +914,17 @@ function getChart5Data(dom) {
             ],
             global: false, // 缺省为 false
           },
-          shadowBlur: 20,
+          shadowBlur: 10,
           shadowColor: "rgba(114, 157, 53, 1)",
         },
+        label: {
+          show: true,
+          color: "rgba(255, 255, 255, 1)",
+          fontSize: 14,
+        },
+        barWidth: "60%",
+        barGap: "0%",
+        barCategoryGap: "0%",
       },
       {
         name: "四星",
@@ -933,9 +950,17 @@ function getChart5Data(dom) {
             ],
             global: false, // 缺省为 false
           },
-          shadowBlur: 20,
+          shadowBlur: 10,
           shadowColor: "rgba(253, 201, 38, 1)",
         },
+        label: {
+          show: true,
+          color: "rgba(255, 255, 255, 1)",
+          fontSize: 14,
+        },
+        barWidth: "60%",
+        barGap: "0%",
+        barCategoryGap: "0%",
       },
       {
         name: "五星",
@@ -964,8 +989,30 @@ function getChart5Data(dom) {
             ],
             global: false, // 缺省为 false
           },
-          shadowBlur: 20,
+          shadowBlur: 10,
           shadowColor: "rgba(254, 138, 37, 1)",
+        },
+        label: {
+          show: true,
+          color: "rgba(255, 255, 255, 1)",
+          fontSize: 14,
+        },
+        barWidth: "60%",
+        barGap: "0%",
+        barCategoryGap: "0%",
+        markPoint: {
+          data: [
+            {
+              type: "max",
+              name: "Max",
+              symbol:
+                "image://data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC8AAAAtCAYAAAA+7zKnAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAALqSURBVGiB7ZfPSxRhGICfd1rbrQTrYBRtVGRQecmOajRpK6zQQQhCOnpz+xfMMYJugqi3PHf1ICQs1ihmEURQ0Wo/qGj7IUFbprG27bwddhdMU3d11tlgHxg+vpmPl+edme+dd4hEIqH+/v749PT0x7a2thD/EYZhGK2qesAwjP0i0uq1UKHcBzR7PAR4XVfX7KlRngig35qb2T02BsDTgwftXXv3mjurqwkEAgR27GB7RcW91Nevd/wjI1e91f0bY8UZEfMf5xrSIl2Jhgb9dPp09xZ45cVK+fUQsd7W1upMTY3nSRQun0VVrSfB4F03ZQplw/IACubzo0f15cmTnjyFTcnnULDenDq15Qm4Ig+gIhaZctv95cKFHrfiroWvCDEtyYxXgclUJDKxze83JZ1WFhYcuXnzDICGQkg0agM2sKFkiyG/lEZHpNEQQVRBdfl1EzB/1tVZqVTKqnr2rKAkXHttNouIWN8L3DclIw+Zjb/Q1JR3AiUlD5mNn7x0Ka/vR8nJA4iqme7s1HRn55pPoSTlc6iIlbx8WX+0tnYnGhvN5deLXW3cQcRSVWZra/mdSFi/5ubGj8zP26Uiby+dqAiqCiLkiquq2o7IuGMYHJmft8HbOz8OWIC98/HjDQXwQn4CsCQa3XRHutXy14Eut4IVrdp8b28HwD8wgKhOkU63yNCQa+KQlc/9vwLgOOfUcc7vGx2V3cPDArSo49zIN+An0wSg6tYtfnZ0TAItRm9vgwwORt0UB5Ar8P5MOBz8fPs2L+DDIARXW5yor+9OJpMsLi5a2ZEKvx9f9qjw+/EFAuy37QngGjC2Wiw38B0OhR7MhsMXw319zLa33+fRo1UX75maynV9PbGaGhM4q6oIZLrGTAWBZaWvWPjeHT8eP5adTB86FF9LfiknXr2y2SLJ1Sjp9mA9yvJeUZb3irK8V5TlvaIs7xVlea8oy3tFWd4rfLFYbLSysjI5MzNDPB63vRYqhD9Ytvk35U4aVgAAAABJRU5ErkJggg==",
+              label: {
+                show: false,
+              },
+              symbolOffset: ["50%", "-50%"],
+            },
+          ],
         },
       },
     ],
@@ -1004,7 +1051,7 @@ function getChart6Data(dom) {
       top: "20%",
       left: "3%",
       right: "3%",
-      bottom: "3%",
+      bottom: "30px",
       containLabel: true,
     },
     xAxis: [
@@ -1058,8 +1105,8 @@ function getChart6Data(dom) {
             ],
             global: false, // 缺省为 false
           },
-          shadowBlur: 20,
-          shadowColor: "rgba(0, 0, 0, 0.5)",
+          shadowBlur: 10,
+          shadowColor: "rgba(255, 158, 74, 1)",
         },
         label: {
           show: true,
@@ -1104,8 +1151,8 @@ function getChart6Data(dom) {
             ],
             global: false, // 缺省为 false
           },
-          shadowBlur: 20,
-          shadowColor: "rgba(0, 0, 0, 0.5)",
+          shadowBlur: 10,
+          shadowColor: "rgba(255, 158, 74, 1)",
         },
         label: {
           show: true,
@@ -1150,8 +1197,8 @@ function getChart6Data(dom) {
             ],
             global: false, // 缺省为 false
           },
-          shadowBlur: 20,
-          shadowColor: "rgba(0, 0, 0, 0.5)",
+          shadowBlur: 10,
+          shadowColor: "rgba(255, 158, 74, 1)",
         },
         label: {
           show: true,
@@ -1196,8 +1243,8 @@ function getChart6Data(dom) {
             ],
             global: false, // 缺省为 false
           },
-          shadowBlur: 20,
-          shadowColor: "rgba(0, 0, 0, 0.5)",
+          shadowBlur: 10,
+          shadowColor: "rgba(255, 158, 74, 1)",
         },
         label: {
           show: true,
@@ -1242,8 +1289,8 @@ function getChart6Data(dom) {
             ],
             global: false, // 缺省为 false
           },
-          shadowBlur: 20,
-          shadowColor: "rgba(0, 0, 0, 0.5)",
+          shadowBlur: 10,
+          shadowColor: "rgba(255, 158, 74, 1)",
         },
         label: {
           show: true,
