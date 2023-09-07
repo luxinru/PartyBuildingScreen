@@ -520,6 +520,9 @@ function getChart2Data(dom) {
           color: "rgba(223, 15, 20, 1)",
           fontSize: 18,
           offset: [4, 0],
+          formatter: function(data) {
+            return echartData.valueData[data.dataIndex];
+          },
         },
         itemStyle: {
           color: "transparent",
@@ -798,6 +801,9 @@ function getChart3Data(dom) {
           color: "rgba(223, 15, 20, 1)",
           fontSize: 18,
           offset: [4, 0],
+          formatter: function(data) {
+            return echartData.valueData[data.dataIndex];
+          },
         },
         itemStyle: {
           color: "transparent",
