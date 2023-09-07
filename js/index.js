@@ -1026,10 +1026,113 @@ function getChart6Data(dom) {
   // 基于准备好的dom，初始化echarts实例
   const myChart = echarts.init(dom);
 
+  const offsetX = 60; //bar宽
+  const offsetY = 16; //倾斜角度
+  const x = 0;
+  const y = 0;
+  const offset = 6;
+  // 绘制上部分
+  const CubeTopRect = echarts.graphic.extendShape({
+    shape: {
+      x: x,
+      y: y,
+    },
+    buildPath: function (ctx, shape) {
+      const c1 = [shape.x, shape.y]; // 左上
+      const c2 = [shape.x + offsetX, shape.y]; // 右上
+      const c3 = [shape.x + offsetX + offsetY, shape.y + offsetY]; // 右下
+      const c4 = [shape.x - offsetY, shape.y + offsetY]; // 左下
+      ctx
+        .moveTo(c1[0], c1[1])
+        .lineTo(c2[0], c2[1])
+        .lineTo(c3[0], c3[1])
+        .lineTo(c4[0], c4[1])
+        .closePath();
+    },
+  });
+  // 绘制中间部分
+  const CubeCenterRect = echarts.graphic.extendShape({
+    shape: {
+      x: x,
+      y: y,
+    },
+    buildPath: function (ctx, shape) {
+      const xAxisPoint = shape.xAxisPoint;
+      const c1 = [shape.x - offsetY, shape.y + offsetY]; // 左上
+      const c2 = [shape.x + offsetX + offsetY, shape.y + offsetY]; // 右上
+      const c3 = [shape.x + offsetX + offsetY, shape.y + offsetY + offset]; // 右下
+      const c4 = [shape.x - offsetY, shape.y + offsetY + offset]; // 左下
+      ctx
+        .moveTo(c1[0], c1[1])
+        .lineTo(c2[0], c2[1])
+        .lineTo(c3[0], c3[1])
+        .lineTo(c4[0], c4[1])
+        .closePath();
+    },
+  });
+  // 绘制下面部分
+  const CubeBottomRect = echarts.graphic.extendShape({
+    shape: {
+      x: x,
+      y: y,
+    },
+    buildPath: function (ctx, shape) {
+      const xAxisPoint = shape.xAxisPoint;
+
+      const c1 = [shape.x - 10, shape.y + offsetY + offset]; // 左上
+      const c2 = [shape.x + offsetX + 10, shape.y + offsetY + offset]; // 右上
+      const c3 = [xAxisPoint[0] + offsetX / 2 + 10, xAxisPoint[1]]; // 右下
+      const c4 = [shape.x - 10, xAxisPoint[1]]; // 左下
+      ctx
+        .moveTo(c1[0], c1[1])
+        .lineTo(c2[0], c2[1])
+        .lineTo(c3[0], c3[1])
+        .lineTo(c4[0], c4[1])
+        .closePath();
+    },
+  });
+  // 注册三个面图形
+  echarts.graphic.registerShape("CubeTopRect", CubeTopRect);
+  echarts.graphic.registerShape("CubeCenterRect", CubeCenterRect);
+  echarts.graphic.registerShape("CubeBottomRect", CubeBottomRect);
+  let seriesData = [8, 9, 15, 10, 7];
+
+  const colors = [
+    {
+      top: ["rgba(106, 190, 255, 1)", "rgba(94, 185, 255, 1)"],
+      center: ["rgba(57, 169, 255, 1)"],
+      bottom: ["#1796f8", "#64bcff"],
+    },
+    {
+      top: ["rgba(255, 163, 118, 1)", "rgba(255, 155, 106, 1)"],
+      center: ["rgba(255, 137, 79, 1)"],
+      bottom: ["#ff7936", "#ffa578"],
+    },
+    {
+      top: ["rgba(255, 127, 127, 1)", "rgba(255, 106, 106, 1)"],
+      center: ["rgba(255, 91, 91, 1)"],
+      bottom: ["rgba(255, 56, 56, 1)", "rgba(255, 104, 104, 1)"],
+    },
+    {
+      top: ["rgba(255, 214, 155, 1)", "rgba(255, 207, 136, 1)"],
+      center: ["rgba(255, 200, 119, 1)"],
+      bottom: ["#ffb953", "#ffca7c"],
+    },
+    {
+      top: ["rgba(255, 242, 0, 1)", "rgba(198, 188, 0, 1)"],
+      center: ["rgba(233, 221, 0, 1)"],
+      bottom: ["#dfd400", "#fef100"],
+    },
+  ];
+
   // 指定图表的配置项和数据
   const option = {
-    tooltip: {
-      trigger: "shadow",
+    grid: {
+      left: "7%",
+      right: "7%",
+      top: "20%",
+      bottom: "9%",
+      containLabel: true,
     },
     legend: {
       top: "5%",
@@ -1045,74 +1148,144 @@ function getChart6Data(dom) {
       ],
       itemStyle: {
         borderWidth: 0,
+      }
+    },
+    xAxis: {
+      type: "category",
+      axisLine: {
+        show: false,
+      },
+      axisTick: {
+        show: false,
+      },
+      axisLabel: {
+        show: false,
+      },
+      boundaryGap: true,
+    },
+    yAxis: {
+      type: "value",
+      axisLine: {
+        show: false,
+      },
+      splitLine: {
+        show: false,
+      },
+      axisTick: {
+        show: false,
+      },
+      axisLabel: {
+        show: false,
       },
     },
-    grid: {
-      top: "20%",
-      left: "3%",
-      right: "3%",
-      bottom: "30px",
-      containLabel: true,
-    },
-    xAxis: [
-      {
-        type: "category",
-        axisTick: { show: false },
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        data: ["2023"],
-      },
-    ],
-    yAxis: [
-      {
-        type: "value",
-        axisLine: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-      },
-    ],
     series: [
       {
-        name: "一星党支部",
-        type: "bar",
-        data: [5],
-        itemStyle: {
-          color: {
-            type: "linear",
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
+        type: "custom",
+        renderItem: (params, api) => {
+          const location = api.coord([api.value(0), api.value(1)]);
+          return {
+            type: "group",
+            children: [
               {
-                offset: 0,
-                color: "rgba(94, 185, 255, 1)", // 0% 处的颜色
+                type: "CubeTopRect",
+                shape: {
+                  api,
+                  xValue: api.value(0),
+                  yValue: api.value(1),
+                  x: location[0] - offsetX / 2,
+                  y: location[1],
+                  xAxisPoint: api.coord([api.value(0), 0]),
+                },
+                style: {
+                  fill: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: colors[params.dataIndex].top[0],
+                    },
+                    {
+                      offset: 1,
+                      color: colors[params.dataIndex].top[1],
+                    },
+                  ]),
+                },
               },
               {
-                offset: 1,
-                color: "rgba(106, 190, 255, 1)", // 100% 处的颜色
+                type: "CubeCenterRect",
+                shape: {
+                  api,
+                  xValue: api.value(0),
+                  yValue: api.value(1),
+                  x: location[0] - offsetX / 2,
+                  y: location[1],
+                  xAxisPoint: api.coord([api.value(0), 0]),
+                },
+                style: {
+                  fill: colors[params.dataIndex].center[0],
+                },
+              },
+              {
+                type: "CubeBottomRect",
+                shape: {
+                  api,
+                  xValue: api.value(0),
+                  yValue: api.value(1),
+                  x: location[0] - offsetX / 2,
+                  y: location[1],
+                  xAxisPoint: api.coord([api.value(0), 0]),
+                },
+                style: {
+                  fill: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: colors[params.dataIndex].bottom[0],
+                    },
+                    {
+                      offset: 1,
+                      color: colors[params.dataIndex].bottom[1],
+                    },
+                  ]),
+                },
               },
             ],
-            global: false, // 缺省为 false
-          },
-          shadowBlur: 10,
-          shadowColor: "rgba(255, 158, 74, 1)",
+          };
+        },
+        z: 1,
+        data: seriesData,
+      },
+      {
+        name: "党支部",
+        type: "bar",
+        data: seriesData,
+        barWidth: 40,
+        itemStyle: {
+          color: "transparent",
         },
         label: {
           show: true,
           color: "rgba(255, 255, 255, 1)",
           fontSize: 22,
-          formatter: ["{cs|{c}}", "{as|{a}}"].join("\n"),
+          formatter: (params) => {
+            console.log("params :>> ", params);
+            let str = "党支部";
+            switch (params.dataIndex) {
+              case 0:
+                str = "一星党支部";
+                break;
+              case 1:
+                str = "二星党支部";
+                break;
+              case 2:
+                str = "三星党支部";
+                break;
+              case 3:
+                str = "四星党支部";
+                break;
+              case 4:
+                str = "五星党支部";
+                break;
+            }
+            return [`{cs|${params.data}}`, `{as|${str}}`].join("\n");
+          },
           rich: {
             cs: {
               color: "rgba(255, 255, 255, 1)",
@@ -1129,189 +1302,45 @@ function getChart6Data(dom) {
         },
       },
       {
-        name: "二星党支部",
-        type: "bar",
-        data: [9],
+        name: '一星党支部',
+        type: 'bar',
+        data: seriesData,
         itemStyle: {
-          color: {
-            type: "linear",
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0,
-                color: "rgba(255, 155, 106, 1)", // 0% 处的颜色
-              },
-              {
-                offset: 1,
-                color: "rgba(255, 163, 118, 1)", // 100% 处的颜色
-              },
-            ],
-            global: false, // 缺省为 false
-          },
-          shadowBlur: 10,
-          shadowColor: "rgba(255, 158, 74, 1)",
-        },
-        label: {
-          show: true,
-          color: "rgba(255, 255, 255, 1)",
-          fontSize: 22,
-          formatter: ["{cs|{c}}", "{as|{a}}"].join("\n"),
-          rich: {
-            cs: {
-              color: "rgba(255, 255, 255, 1)",
-              fontSize: 22,
-              lineHeight: 22,
-              align: "center",
-            },
-            as: {
-              color: "rgba(255, 255, 255, 1)",
-              padding: [10, 0, 0, 0],
-              align: "center",
-            },
-          },
-        },
+          color: '#1796f8'
+        }
       },
       {
-        name: "三星党支部",
-        type: "bar",
-        data: [15],
+        name: '二星党支部',
+        type: 'bar',
+        data: seriesData,
         itemStyle: {
-          color: {
-            type: "linear",
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0,
-                color: "rgba(255, 56, 56, 1)", // 0% 处的颜色
-              },
-              {
-                offset: 1,
-                color: "rgba(255, 104, 104, 1)", // 100% 处的颜色
-              },
-            ],
-            global: false, // 缺省为 false
-          },
-          shadowBlur: 10,
-          shadowColor: "rgba(255, 158, 74, 1)",
-        },
-        label: {
-          show: true,
-          color: "rgba(255, 255, 255, 1)",
-          fontSize: 22,
-          formatter: ["{cs|{c}}", "{as|{a}}"].join("\n"),
-          rich: {
-            cs: {
-              color: "rgba(255, 255, 255, 1)",
-              fontSize: 22,
-              lineHeight: 22,
-              align: "center",
-            },
-            as: {
-              color: "rgba(255, 255, 255, 1)",
-              padding: [10, 0, 0, 0],
-              align: "center",
-            },
-          },
-        },
+          color: '#ff7936'
+        }
       },
       {
-        name: "四星党支部",
-        type: "bar",
-        data: [7],
+        name: '三星党支部',
+        type: 'bar',
+        data: seriesData,
         itemStyle: {
-          color: {
-            type: "linear",
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0,
-                color: "rgba(255, 207, 136, 1)", // 0% 处的颜色
-              },
-              {
-                offset: 1,
-                color: "rgba(255, 214, 155, 1)", // 100% 处的颜色
-              },
-            ],
-            global: false, // 缺省为 false
-          },
-          shadowBlur: 10,
-          shadowColor: "rgba(255, 158, 74, 1)",
-        },
-        label: {
-          show: true,
-          color: "rgba(255, 255, 255, 1)",
-          fontSize: 22,
-          formatter: ["{cs|{c}}", "{as|{a}}"].join("\n"),
-          rich: {
-            cs: {
-              color: "rgba(255, 255, 255, 1)",
-              fontSize: 22,
-              lineHeight: 22,
-              align: "center",
-            },
-            as: {
-              color: "rgba(255, 255, 255, 1)",
-              padding: [10, 0, 0, 0],
-              align: "center",
-            },
-          },
-        },
+          color: '#ff3939'
+        }
       },
       {
-        name: "五星党支部",
-        type: "bar",
-        data: [6],
+        name: '四星党支部',
+        type: 'bar',
+        data: seriesData,
         itemStyle: {
-          color: {
-            type: "linear",
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0,
-                color: "rgba(255, 242, 0, 1)", // 0% 处的颜色
-              },
-              {
-                offset: 1,
-                color: "rgba(255, 242, 0, 0.7)", // 100% 处的颜色
-              },
-            ],
-            global: false, // 缺省为 false
-          },
-          shadowBlur: 10,
-          shadowColor: "rgba(255, 158, 74, 1)",
-        },
-        label: {
-          show: true,
-          color: "rgba(255, 255, 255, 1)",
-          fontSize: 22,
-          formatter: ["{cs|{c}}", "{as|{a}}"].join("\n"),
-          rich: {
-            cs: {
-              color: "rgba(255, 255, 255, 1)",
-              fontSize: 22,
-              lineHeight: 22,
-              align: "center",
-            },
-            as: {
-              color: "rgba(255, 255, 255, 1)",
-              padding: [10, 0, 0, 0],
-              align: "center",
-            },
-          },
-        },
+          color: '#ffb953'
+        }
       },
+      {
+        name: '五星党支部',
+        type: 'bar',
+        data: seriesData,
+        itemStyle: {
+          color: '#dfd400'
+        }
+      }
     ],
   };
 
